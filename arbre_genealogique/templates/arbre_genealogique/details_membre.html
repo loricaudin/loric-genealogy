@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    <div class="membre-details">
+        <label for="prenom">Prénom :</label>
+        <input type="text" disabled value="{{details_membre.prenom}}"/>
+    </div>
+{% endblock %}

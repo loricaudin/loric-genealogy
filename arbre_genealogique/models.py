@@ -9,7 +9,7 @@ class Membre(models.Model):
     nom_famille_pere = models.CharField(max_length=100, blank=True, null=True)
     nom_famille_mere = models.CharField(max_length=100, blank=True, null=True)
 
-    genre = models.CharField(choices=[("H", "Homme"), ("F", "Femme")])
+    genre = models.CharField(choices=[("H", "Homme"), ("F", "Femme")], max_length=1)
 
     date_naissance = models.DateField(blank=True, null=True)
     date_mort = models.DateField(blank=True, null=True)

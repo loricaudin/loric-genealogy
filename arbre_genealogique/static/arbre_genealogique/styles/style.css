@@ -1,0 +1,28 @@
+html,
+body {
+    font-family: Poppins, Calibri, Arial, sans-serif;
+
+    scroll-behavior: smooth;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    position: relative;
+
+    --couleur-principale: #503AC0;
+    --couleur-secondaire: #322377;
+    --couleur-tertiaire: #a998ff;
+    --couleur-quaternaire: #e9e5ff;
+}
+
+@font-face {
+    font-family: "Poppins";
+    src: url("/static/arbre_genealogique/polices/Poppins/Poppins-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Poppins";
+    font-weight: bold;
+    src: url("/static/arbre_genealogique/polices/Poppins/Poppins-Bold.ttf");
+}

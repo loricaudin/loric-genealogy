@@ -1,0 +1,19 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr-fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Loric Genealogy{% endblock %}</title>
+    <meta name="robots" content="noindex, nofollow"/>
+    <link rel="icon" href="{% static 'arbre_genealogique/images/icone.png' %}"/>
+    <link rel="stylesheet" href ="{% static 'arbre_genealogique/styles/header.css' %}"/>
+    <link rel="stylesheet" href ="{% static 'arbre_genealogique/styles/style.css' %}"/>
+</head>
+<body>
+    {% include "header.html" %}
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>
