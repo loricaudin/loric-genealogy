@@ -5,5 +5,6 @@ from . import views
 app_name = "arbre_genealogique"
 urlpatterns = [
     path("", views.index, name="index"),
-    path("<int:id_membre>", views.details_membre, name="details_membre")
+    path("<int:id_membre>", views.details_membre, name="details_membre"),
+    path("<int:id_membre>/modifier", views.modifier_membre, name="modifier_membre")
 ]

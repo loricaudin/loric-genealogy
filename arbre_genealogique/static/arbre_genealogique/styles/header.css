@@ -50,6 +50,7 @@ header #bouton-menu-nav {
 }
 
 header h1 {
+    font-family: Poppins, Calibri;
     text-decoration: none;
     cursor: pointer;
     margin: 15px;

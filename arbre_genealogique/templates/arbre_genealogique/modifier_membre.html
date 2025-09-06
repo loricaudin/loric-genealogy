@@ -4,12 +4,12 @@
 {% block content %}
     <form class="membre-details">
         <div>
-            <img src="{{details_membre.photo.url}}">
+            <label for="photo">Photo :</label>
         </div>
         <h1>{{details_membre.prenom}} {{details_membre.nom_famille}}</h1>
         <div>
             <label for="prenom">Prénom principale :</label>
-            <input type="text" disabled value="{{details_membre.prenom}}"/>
+            <input type="text" value="{{details_membre.prenom}}"/>
         </div>
         <div>
             <label for="liste_prenoms">Liste des prénoms :</label>

@@ -24,5 +24,11 @@ body {
 @font-face {
     font-family: "Poppins";
     font-weight: bold;
+    src: url("/static/arbre_genealogique/polices/Poppins/Poppins-SemiBold.ttf");
+}
+
+@font-face {
+    font-family: "Poppins";
+    font-weight: 100;
     src: url("/static/arbre_genealogique/polices/Poppins/Poppins-Bold.ttf");
 }
