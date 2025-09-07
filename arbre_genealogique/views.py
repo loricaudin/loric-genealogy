@@ -1,6 +1,14 @@
 from django.shortcuts import render
 from .models import Membre
 
+from django.template.defaulttags import register
+
+@register.filter(name='split')
+def split(value, key): 
+ 
+    value.split("key")
+    return value.split(key)
+
 def index(request):
     context = {"arbre": "rien"}
     return render(request, "arbre_genealogique/index.html", context)

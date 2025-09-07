@@ -13,7 +13,7 @@ class Membre(models.Model):
 
     nom_famille = models.CharField(max_length=100)
 
-    genre = models.CharField(choices=[("H", "Homme"), ("F", "Femme")], max_length=1)
+    genre = models.CharField(choices=[("H", "Homme"), ("F", "Femme")], max_length=1, blank=True, null=True)
 
     date_naissance = models.DateField(blank=True, null=True)
     date_mort = models.DateField(blank=True, null=True)
@@ -45,6 +45,10 @@ class Membre(models.Model):
         blank=True,
         null=True,
         related_name='en_couple_avec'
+    )
+
+    divorce = models.ManyToManyField(
+        to='self'
     )
 
     def __str__(self):
