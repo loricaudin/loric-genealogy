@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Loric Genealogy - Connexion{% endblock %}
+{% block content %}
+    {% if user.is_authenticated %}
+        Vous êtes connecté en tant que <strong> {{ user.username }}!</strong>
+        <a href="/" >Accueil</a>
+        <a href="/compte/logout" >Se déconnecter</a>
+    {% else %}
+        <form method="post">
+            {% csrf_token %}
+            <h1>Connexion</h1>
+            {{ form.as_p }}
+            <!-- <label for="identifiant">Identifiant</label>
+            <input type="text" name="identifiant" required>
+            <label for="mot-de-passe">Mot de passe</label>
+            <input type="password" name="mot-de-passe" required> -->
+            <button type="submit">Se connecter</button>
+        </form>
+        <div>Pas de compte ?
+            <a href="{% url 'compte:register' %}"><button>S'inscrire</button></a>
+        </div>
+    {% endif %}
+{% endblock %}

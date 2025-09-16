@@ -8,4 +8,11 @@
         </div>
     </button>
     <h1><a href="#"><img src="{% static 'arbre_genealogique/images/icone.png' %}" /> Loric Genealogy</a></h1>
+    <div>
+        {% if user.is_authenticated %}
+            <form method="post" action="{% url 'compte:logout' %}">{% csrf_token %}<button type="submit">Se déconnecter</button></form>
+        {% else %}
+            <a href="{% url 'compte:login' %}"><button>Se connecter</button></a>
+        {% endif %}
+    </div>
 </header>

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Loric Genealogy - Connexion{% endblock %}
+{% block content %}
+    {% if not user.is_authenticated %}
+        Vous êtes déconnecté
+        <a href="/compte/login" >Se connecter</a>
+    {% else %}
+        <p>Erreur de déconnexion</p>
+    {% endif %}
+{% endblock %}

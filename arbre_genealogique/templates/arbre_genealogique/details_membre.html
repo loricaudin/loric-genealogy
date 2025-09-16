@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block title %}Loric Genealogy - Détails membre{% endblock %}
 {% block content %}
     <span class="popup membre-details">
         <div class="fenetre-popup">
@@ -11,73 +12,154 @@
                     <div class="barre-croix-2"></div>
                 </button>
             </div>
-            <div class="contenu-fenetre">
-                <h1><img src="{{details_membre.photo.url}}" class="photo-profil"> {{details_membre.prenom}} {{details_membre.nom_famille}}</h1>
-                <div>
-                    <h2>Prénom principale :</h2>
-                    <span class="lecture">{{details_membre.prenom}}</span>
-                    <input class="modification" type="text" value="{{details_membre.liste_prenoms}}"/>
-                </div>
-                <div>
-                    <h2>Liste des prénoms :</h2>
-                    <span class="lecture">
-                        <ul>
-                            {% for prenom in details_membre.liste_prenoms|split:", " %}
-                                <li>{{prenom}}</li>
-                            {% endfor %}
-                        </ul>
-                    </span>
-                    <input class="modification" type="text" disabled value="{{details_membre.liste_prenoms}}"/>
-                </div>
-                <div>
-                    <h2>Nom de famille :</h2>
-                    <span class="lecture">{{details_membre.nom_famille}}</span>
-                    <input class="modification" type="text" disabled value="{{details_membre.nom_famille}}"/>
-                </div>
-                <div>
-                    <h2>Genre :</h2>
-                    <span class="lecture">
-                        {% if details_membre.genre == "H" %}
-                            Homme
-                        {% elif details_membre.genre == "F" %}
-                            Femme
-                        {% else %}
-                            Non spécifié
+            <form class="contenu-fenetre form-lecture" method="post" action="{% url 'arbre_genealogique:enregistrer_modification_membre' details_membre.id %}">
+                {% csrf_token %}
+                <div class="infos-principaux">
+                    {% if details_membre.photo %}
+                        <img src="{{details_membre.photo.url}}" class="photo-profil">
+                    {% else %}
+                        <img src="{% static 'arbre_genealogique/images/profil.png' %}" class="photo-profil">
+                    {% endif %}
+                    <div>
+                        <h1>{{details_membre.prenom}} {{details_membre.nom_famille}}</h1>
+                        {% if True %}
+                            <div>
+                                <a class="bouton lecture" onclick="document.querySelector('.contenu-fenetre').classList.toggle('form-lecture')">Modifier</a>
+                                <a class="bouton modification" onclick="document.querySelector('.contenu-fenetre').classList.toggle('form-lecture')">Annuler</a>
+                                <button class="bouton modification" onclick="">Enregistrer</button>
+                            </div>
                         {% endif %}
-                    </span>
+                    </div>
                 </div>
-                <div>
-                    <label for="date_naissance">Date de naissance :</label>
+                <div class="liste-infos">
+                    <div>
+                        <h2>Prénom principale :</h2>
+                        <span class="lecture">{{details_membre.prenom}}</span>
+                        <input class="modification" type="text" value="{{details_membre.prenom}}"/>
+                    </div>
+                    {% if details_membre.liste_prenoms %}
+                        <div class="lecture">
+                            <h2>Liste des prénoms :</h2>
+                            <span>
+                                <ul>
+                                    {% for prenom in details_membre.liste_prenoms|split:", " %}
+                                        <li>{{prenom}}</li>
+                                    {% endfor %}
+                                </ul>
+                            </span>
+                        </div>
+                    {% endif %}
+                    <div class="modification">
+                        <h2>Liste des prénoms :</h2>
+                        <!-- TODO : Popup de saisie de tous les prénoms -->
+                        <input type="text" disabled value="{{details_membre.liste_prenoms}}"/>
+                    </div>
+                    <div>
+                        <h2>Nom de famille :</h2>
+                        <span class="lecture">{{details_membre.nom_famille}}</span>
+                        <input class="modification" type="text" value="{{details_membre.nom_famille}}"/>
+                    </div>
+                    <div>
+                        <h2>Genre :</h2>
+                        <span class="lecture">
+                            {% if details_membre.genre == "H" %}
+                                Homme
+                            {% elif details_membre.genre == "F" %}
+                                Femme
+                            {% else %}
+                                Non spécifié
+                            {% endif %}
+                        </span>
+                        <!-- TODO : Cocher la bonne case -->
+                        <input class="modification" type="radio" name="genre" value="H"/>
+                        <label class="modification">Homme</label>
+
+                        <input class="modification" type="radio" name="genre" value="F"/>
+                        <label class="modification">Femme</label>
+
+                        <input class="modification" type="radio" name="genre" value="null" checked/>
+                        <label class="modification">Non spécifié</label>
+
+                    </div>
+                    <div>
+                        <h2>Date de naissance :</h2>
+                        <span class="lecture">
+                            {% if details_membre.date_naissance %}
+                                {{details_membre.date_naissance}}
+                            {% else %}
+                                Inconnue
+                            {% endif %}
+                        </span>
+                        <!-- TODO : Valeur par défaut à mettre sous la forme YYYY-MM-DD -->
+                        <input class="modification" type="date" value="{{details_membre.date_naissance}}">
+                    </div>
+                    {% if details_membre.date_mort %}
+                        <div>
+                            <h2>Date de décès :</h2>
+                            <span class="lecture">{{details_membre.date_mort}}</span>
+                        </div>
+                        <!-- TODO : Valeur par défaut à mettre sous la forme YYYY-MM-DD -->
+                        <input class="modification" type="date" value="{{details_membre.date_naissance}}">
+                    {% endif %}
+                    <div>
+                        <h2>Père :</h2>
+                        <span class="lecture">
+                            {% if details_membre.pere %}
+                                {{details_membre.pere}}
+                            {% else %}
+                                Inconnu
+                            {% endif %}
+                        </span>
+                    </div>
+                    <div>
+                        <h2>Mère :</h2>
+                        <span class="lecture">
+                            {% if details_membre.mere %}
+                                {{details_membre.mere}}
+                            {% else %}
+                                Inconnue
+                            {% endif %}
+                        </span>
+                    </div>
+                    {% if details_membre.couple %}
+                        <div>
+                            <h2>En couple avec :</h2>
+                            <span class="lecture">{{details_membre.couple}}</span>
+                        </div>
+                    {% endif %}
+                    {% if details_membre.enfants %}
+                        <div>
+                            <h2>Enfants :</h2>
+                            <span class="lecture">
+                                <ul>
+                                    {% for enfant in details_membre.enfants %}
+                                        <li>{{enfant}}</li>
+                                    {% endfor %}
+                                </ul>
+                            </span>
+                        </div>
+                    {% endif %}
+                    {% if details_membre.numero_telephone %}
+                        <div>
+                            <h2>Numéro de téléphone :</h2>
+                            <span class="lecture">{{details_membre.numero_telephone}}</span>
+                        </div>
+                    {% endif %}
+                    {% if details_membre.adresse_mail %}
+                        <div>
+                            <h2>Adresse mail :</h2>
+                            <span class="lecture">{{details_membre.adresse_mail}}</span>
+                        </div>
+                    {% endif %}
+                    {% if details_membre.adresse %}
+                        <div>
+                            <h2>Adresse :</h2>
+                            <span class="lecture">{{details_membre.adresse}}</span>
+                        </div>
+                    {% endif %}
                 </div>
-                <div>
-                    <label for="date_mort">Date de décès :</label>
-                </div>
-                <div>
-                    <label for="pere">Père :</label>
-                    <input type="text" disabled value="{{details_membre.pere}}"/>
-                </div>
-                <div>
-                    <label for="mere">Mère :</label>
-                    <input type="text" disabled value="{{details_membre.mere}}"/>
-                </div>
-                <div>
-                    <label for="couple">En couple avec :</label>
-                    <input type="text" disabled value="{{details_membre.couple}}"/>
-                </div>
-                <div>
-                    <label for="enfants">Enfants :</label>
-                    <input type="text" disabled value="{{details_membre.enfants}}"/>
-                </div>
-                <div>
-                    <label for="numero_telephone">Numéro de téléphone :</label>
-                </div>
-                <div>
-                    <label for="adresse_mail">Adresse mail :</label>
-                </div>
-                <div>
-                    <label for="adresse">Adresse :</label>
-                </div>
-            </div>
+            </form>
         </div>
     </span>
+    <script src="{% static 'arbre_genealogique/scripts/membres.js' %}"></script>
 {% endblock %}

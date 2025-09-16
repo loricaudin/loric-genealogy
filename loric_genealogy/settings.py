@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 #    'rest_framework',
 
-    'arbre_genealogique'
+    'arbre_genealogique',
+    'gestion_utilisateurs'
 ]
 
 MIDDLEWARE = [
@@ -129,3 +130,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 APPEND_SLASH = True
+
+
+# Login / Logout
+LOGOUT_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/'

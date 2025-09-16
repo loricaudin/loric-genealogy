@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 import uuid
 
 def image_upload_path(instance, filename):
@@ -48,7 +49,18 @@ class Membre(models.Model):
     )
 
     divorce = models.ManyToManyField(
-        to='self'
+        to='self',
+        blank=True
+    )
+
+    biographie = models.CharField(max_length=1024, blank=True, null=True)
+
+    user = models.ForeignKey(
+        to=User,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name='utilisateur_associe'
     )
 
     def __str__(self):

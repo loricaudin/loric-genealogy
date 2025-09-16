@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Loric Genealogy - Changer mot de passe{% endblock %}
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        <h1>Changer de mot de passe</h1>
+        <label for="mot-de-passe">Nouveau mot de passe</label>
+        <input type="password" name="mot-de-passe" required>
+        <label for="mot-de-passe-confirmation">Confirmer votre mot de passe</label>
+        <input type="password" name="mot-de-passe-confirmation" required>
+        <button type="submit">Modifier</button>
+        <p>{{erreur}}</p>
+    </form>
+{% endblock %}
