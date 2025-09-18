@@ -12,9 +12,23 @@
     {% block style %}{% endblock %}
 </head>
 <body>
-    {% include "header.html" %}
+    {% if not user.is_connected or initiales_membre or user.is_staff %}
+        {% include "header.html" %}
+    {% endif %}
     <main>
-        {% block content %}{% endblock %}
+        {% if not user.is_connected or initiales_membre %}
+            {% block content %}{% endblock %}
+        {% elif user.is_staff %}
+            <section>
+                <h1>Vous démarrez le projet pour la première fois</h1>
+                <p>Cliquez sur l'icône A sur fond vert (en haut à droite) et ajoutez des utilisateurs dans la section Django Admin. Pensez à vous associer à un membre pour débloquer cette page.</p>
+            </section>
+        {% else %}
+            <section style="color: red;">
+                <h1>Erreur grave !</h1>
+                <p>Vous êtes connecté, mais aucun profil n'a été trouvé sur vous dans la base de données de l'application. Veuillez contacter l'administrateur.</p>
+            </section>
+        {% endif %}
     </main>
 </body>
 </html>
