@@ -1,6 +1,6 @@
 #!/bin/bash
 
 # Pour Vercel uniquement
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 mkdir -p public/static
-python manage.py collectstatic --noinput
+python3 manage.py collectstatic --noinput
