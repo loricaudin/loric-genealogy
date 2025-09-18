@@ -1,10 +1,20 @@
 {
-    "buildCommand": "pip3 install -r requirements.txt && python3 manage.py collectstatic --noinput",
-    "outputDirectory": ".",
-    "routes": [
-        {
-            "src": "/static/(.*)",
-            "dest": "staticfiles/$1"
-        }
-    ]
+  "version": 2,
+  "builds": [
+    {
+      "src": "loric_genealogy/wsgi.py",
+      "use": "@vercel/python",
+      "config": { "maxLambdaSize": "15mb", "runtime": "python3.13" }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/static/(.*)",
+      "dest": "/static/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "loric_genealogy/wsgi.py"
+    }
+  ]
 }
