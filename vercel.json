@@ -14,16 +14,8 @@
   ],
   "routes": [
     {
-      "src": "/static/(.*)",
-      "dest": "/static/$1"
-    },
-    {
       "src": "/(.*)",
       "dest": "loric_genealogy/wsgi.py"
-    },
-    {
-        "src": "/media/(.*)",
-        "dest": "/media/$1"
     }
   ]
 }
