@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}Loric Genealogy - Détails membre{% endblock %}
-{% block style %}<link rel="stylesheet" href ="{% static 'arbre_genealogique/styles/membres.css' %}"/>{% endblock %}
+{% block style %}<link rel="stylesheet" href ="{% static 'styles/membres.css' %}"/>{% endblock %}
 
 {% block content %}
     <span class="popup membre-details">
@@ -20,7 +20,7 @@
                     {% if details_membre.photo %}
                         <img src="{{details_membre.photo.url}}" class="photo-profil">
                     {% else %}
-                        <img src="{% static 'arbre_genealogique/images/profil.png' %}" class="photo-profil">
+                        <img src="{% static 'images/profil.png' %}" class="photo-profil">
                     {% endif %}
                     <div>
                         <h1>{{details_membre.prenom}} {{details_membre.nom_famille}}</h1>
@@ -163,5 +163,5 @@
             </form>
         </div>
     </span>
-    <script src="{% static 'arbre_genealogique/scripts/membres.js' %}"></script>
+    <script src="{% static 'scripts/membres.js' %}"></script>
 {% endblock %}

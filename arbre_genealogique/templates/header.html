@@ -9,7 +9,7 @@
             </div>
         </button>
     {% endif %}
-    <h1><a href="/"><img src="{% static 'arbre_genealogique/images/icone.png' %}" /> Loric Genealogy</a></h1>
+    <h1><a href="/"><img src="{% static 'images/icone.png' %}" /> Loric Genealogy</a></h1>
     <div>
         {% if user.is_authenticated %}
             <nav>
@@ -38,5 +38,5 @@
         {% endif %}
         <form method="post" action="{% url 'compte:logout' %}">{% csrf_token %}<button class="bouton" type="submit">Se déconnecter</button></form>
     </span>
-    <script src="{% static 'arbre_genealogique/scripts/header.js' %}"></script>
+    <script src="{% static 'scripts/header.js' %}"></script>
 </header>
