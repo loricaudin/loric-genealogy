@@ -1,14 +1,14 @@
 {
-  "buildCommand": "pip3 install -r requirements.txt && python3 manage.py collectstatic --noinput",
-  "outputDirectory": ".",
-  "routes": [
-    {
-      "src": "/static/(.*)",
-      "dest": "staticfiles/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "wsgi.py"
-    }
-  ]
+    "buildCommand": "pip3 install -r requirements.txt && python3 manage.py collectstatic --noinput",
+    "outputDirectory": ".",
+    "routes": [
+      {
+        "src": "/static/(.*)",
+        "dest": "staticfiles/$1"
+      },
+      {
+        "src": "/(.*)",
+        "dest": "api/index.py"
+      }
+    ]
 }
