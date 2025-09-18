@@ -24,4 +24,4 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("arbre_genealogique.urls")),
     path("compte/", include("gestion_utilisateurs.urls"))
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
