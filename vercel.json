@@ -1,28 +1,15 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "loric_genealogy/wsgi.py",
-      "use": "@vercel/python",
-      "config": { "maxLambdaSize": "15mb", "runtime": "python3.13" }
-    },
-    {
-      "src": "build_files.sh",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "staticfiles"
-      }
-    }
-  ],
-  "buildCommand": "pip install -r requirements.txt && python manage.py makemigrations arbre_genealogique && python manage.py migrate && python manage.py collectstatic --noinput",
+  "buildCommand": "pip install -r requirements.txt && python manage.py collectstatic --noinput",
+  "outputDirectory": ".",
+  "framework": "other",
   "routes": [
     {
       "src": "/static/(.*)",
-      "dest": "/static/$1"
+      "dest": "staticfiles/$1"
     },
     {
       "src": "/(.*)",
-      "dest": "loric_genealogy/wsgi.py"
+      "dest": "wsgi.py"
     }
   ]
 }
