@@ -14,7 +14,7 @@
       }
     }
   ],
-  "buildCommand": "pip install -r requirements.txt && python manage.py makemigrations arbre_genealogique && python manage.py migrate && python manage.py collectstatic --noinput",
+  "buildCommand": "pip install -r requirements.txt && python manage.py collectstatic --noinput",
   "routes": [
     {
       "src": "/static/(.*)",
