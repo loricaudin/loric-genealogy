@@ -1,5 +1,7 @@
-/db.sqlite3
+db.sqlite3
 /loric_genealogy.bat
 *__pycache__*
 media/
 *migrations*
+.env
+venv

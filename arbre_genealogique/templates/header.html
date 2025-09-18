@@ -1,18 +1,40 @@
 {% load static %}
 <header>
-    <button id="bouton-menu-nav" onClick={ouvrirFermerMenuNav}>
-        <div>
-            <div id="bar-nav-1"></div>
-            <div id="bar-nav-2"></div>
-            <div id="bar-nav-3"></div>
-        </div>
-    </button>
-    <h1><a href="#"><img src="{% static 'arbre_genealogique/images/icone.png' %}" /> Loric Genealogy</a></h1>
+    {% if user.is_authenticated %}
+        <button id="bouton-menu-nav">
+            <div>
+                <div id="bar-nav-1"></div>
+                <div id="bar-nav-2"></div>
+                <div id="bar-nav-3"></div>
+            </div>
+        </button>
+    {% endif %}
+    <h1><a href="/"><img src="{% static 'arbre_genealogique/images/icone.png' %}" /> Loric Genealogy</a></h1>
     <div>
         {% if user.is_authenticated %}
-            <form method="post" action="{% url 'compte:logout' %}">{% csrf_token %}<button type="submit">Se déconnecter</button></form>
+            <nav>
+                <ul>
+                    <li><a href="{% url 'arbre_genealogique:arbre' %}">Arbre</a></li>
+                    <li><a href="{% url 'arbre_genealogique:liste' %}">Liste</a></li>
+                </ul>
+            </nav>
+            <div class="icone-compte">
+                {% if photo_membre %}
+                    <img src="{{photo_membre}}"/>
+                {% else %}
+                    {{initiales_membre}}
+                {% endif %}
+            </div>
         {% else %}
-            <a href="{% url 'compte:login' %}"><button>Se connecter</button></a>
+            <a class="bouton-connecter" href="{% url 'compte:login' %}"><button class="bouton">Se connecter</button></a>
         {% endif %}
     </div>
+    <span class="menu-compte">
+        <a href="{% url 'compte:mon_compte' %}">Mon compte</a>
+        {% if user.is_staff %}
+            <a href="/admin">Portail admin {{user.o}}</a>
+        {% endif %}
+        <form method="post" action="{% url 'compte:logout' %}">{% csrf_token %}<button class="bouton" type="submit">Se déconnecter</button></form>
+    </span>
+    <script src="{% static 'arbre_genealogique/scripts/header.js' %}"></script>
 </header>

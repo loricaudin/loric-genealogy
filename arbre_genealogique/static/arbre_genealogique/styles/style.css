@@ -3,17 +3,30 @@ body {
     font-family: Poppins, Calibri, Arial, sans-serif;
 
     scroll-behavior: smooth;
-    overflow-y: scroll;
-    overflow-x: hidden;
     margin: 0;
     padding: 0;
-    width: 100vw;
+    overflow-x: hidden;
+    min-height: 100vh;
     position: relative;
 
-    --couleur-principale: #503AC0;
-    --couleur-secondaire: #322377;
-    --couleur-tertiaire: #a998ff;
-    --couleur-quaternaire: #e9e5ff;
+    --couleur-principale: #197819;
+    --couleur-secondaire: #125712;
+    --couleur-tertiaire: #27a327;
+    --couleur-quaternaire: #82cb82;
+
+    background-image: linear-gradient(70deg, #f0fff0, #e0ffe0);
+}
+
+h1 {
+    font-size: 32px;
+}
+
+h2 {
+    font-size: 24px;
+}
+
+h3 {
+    font-size: 20px;
 }
 
 @font-face {
@@ -44,11 +57,30 @@ body {
     background-color: var(--couleur-principale);
     cursor: pointer;
     transition: all .25s;
+    text-decoration: none;
 }
 
 .bouton:hover {
     background-color: var(--couleur-tertiaire);
 }
+
+main section {
+    margin: 50px 5px;
+    padding: 30px;
+    background-color: #fafafab3;
+    box-shadow: 16px 16px 30px #00000080,-8px -8px 20px #0000001a;
+    border-radius: 30px;
+}
+
+main section > h1 {
+    margin: 0;
+}
+
+main section > h2 {
+    margin: 0;
+}
+
+
 
 .popup {
     position: fixed;

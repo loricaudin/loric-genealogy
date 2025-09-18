@@ -2,34 +2,58 @@
 {% load static %}
 
 {% block title %}Loric Genealogy - Inscription{% endblock %}
+{% block style %}<link rel="stylesheet" href ="{% static 'arbre_genealogique/styles/comptes.css' %}"/>{% endblock %}
+
 {% block content %}
-    <form method="post">
+    <form method="post" class="inscription">
         {% csrf_token %}
-        <input type="text" name="id_membre" value="{{membre.uuid}}" style="display: none;"/>
-        {% if not membre %}
-            <h1>Vérification de votre identité</h1>
-            <p>Afin de nous assurer que vous êtes bien de la famille, nous allons vérifier si vous êtes bien dans l'arbre généalogique.</p>
-            <label for="prenom">Prénom</label>
-            <input type="text" name="prenom" required/>
-            <label for="nom">Nom de famille</label>
-            <input type="text" name="nom" required/>
-            <label for="date_naissance">Date de naissance</label>
-            <input type="date" name="date_naissance" required/>
-            <button type="submit">Vérifier</button>
-        {% else %}
-            <h1>Inscription</h1>
-            <p>Bienvenue {{membre.prenom}} {{membre.nom_famille}} !</p>
-            <p>Vous êtes autorisé à participer à l'arbre généalogique. Vous pouvez créer votre compte.</p>
-            <label for="identifiant">Identifiant</label>
-            <input type="text" name="identifiant" value="{{utilisateur.identifiant}}" required/>
-            <label for="mot-de-passe">Mot de passe</label>
-            <input type="password" name="mot-de-passe" required/>
-            <label for="mot-de-passe-confirmation">Confirmer votre mot de passe</label>
-            <input type="password" name="mot-de-passe-confirmation" required/>
-            <button type="submit">S'inscrire</button>
-        {% endif %}
-        {% if erreur %}
-            <p>{{erreur}}</p>
-        {% endif %}
+        <section>
+            <input type="text" name="id_membre" value="{{membre.uuid}}" style="display: none;"/>
+            {% if not membre %}
+                <h1>Étape 1 : Vérification de votre identité</h1>
+                {% if erreur %}
+                    <p class="errorlist">{{erreur}}</p>
+                {% endif %}
+                <p>Afin de nous assurer que vous êtes bien de la famille, nous allons vérifier si vous êtes bien dans l'arbre généalogique.</p>
+                <p>
+                    <label for="prenom">Prénom</label>
+                    <input type="text" name="prenom" value="{{utilisateur.prenom}}" required/>
+                </p>
+                <p>
+                    <label for="nom">Nom de famille</label>
+                    <input type="text" name="nom" value="{{utilisateur.nom_famille}}" required/>
+                </p>
+                <p>
+                    <label for="date_naissance">Date de naissance</label>
+                    <input type="date" name="date_naissance" value="{{utilisateur.date_naissance}}" required/>
+                </p>
+                <button type="submit" class="bouton">Vérifier</button>
+            {% else %}
+                <h1>Étape 2 : Inscription</h1>
+                {% if erreur %}
+                    <p class="errorlist">{{erreur}}</p>
+                {% endif %}
+                <p>Bienvenue {{membre.prenom}} {{membre.nom_famille}} !</p>
+                <p>Vous êtes autorisé à participer à l'arbre généalogique. Vous pouvez créer votre compte.</p>
+                <p>
+                    <label for="identifiant">Identifiant</label>
+                    <input type="text" name="identifiant" value="{{utilisateur.identifiant}}" required/>
+                </p>
+                <p>
+                    <label for="mot-de-passe">Mot de passe</label>
+                    <input type="password" name="mot-de-passe" required/>
+                </p>
+                <p>
+                    <label for="mot-de-passe-confirmation">Confirmer votre mot de passe</label>
+                    <input type="password" name="mot-de-passe-confirmation" required/>
+                </p>
+                <button type="submit" class="bouton">S'inscrire</button>
+            {% endif %}
+            <br/>
+            <br/>
+            <h2>Vous avez un compte ?</h2>
+            <br/>
+            <a href="{% url 'compte:login' %}" class="bouton">Se connecter</a>
+        </section>
     </form>
 {% endblock %}

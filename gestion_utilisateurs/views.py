@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from arbre_genealogique.models import Membre
 
 PAGE_INSCRIPTION = "registration/signup.html"
+PAGE_MON_COMPTE = "mon_compte/mon_compte.html"
 
 def recuperer_membre(prenom, nom, date_naissance):
     membre = Membre.objects.filter(prenom=prenom, nom_famille=nom, date_naissance=date_naissance, user=None).first()
@@ -73,3 +74,9 @@ def register(request):
         return render(request, PAGE_INSCRIPTION, contexte)
     else:
         return render(request, PAGE_INSCRIPTION, {})
+PAGE_MON_COMPTE
+def mon_compte(request):
+    if request.method == 'POST':
+        pass
+    else:
+        return render(request, PAGE_MON_COMPTE, {})

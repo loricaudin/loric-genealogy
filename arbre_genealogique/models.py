@@ -27,14 +27,14 @@ class Membre(models.Model):
 
     pere = models.ForeignKey(
         to='self',
-        on_delete=models.CASCADE,
+        on_delete=models.SET_NULL,
         blank=True,
         null=True,
         related_name='enfants_pere'
     )
     mere = models.ForeignKey(
         to='self',
-        on_delete=models.CASCADE,
+        on_delete=models.SET_NULL,
         blank=True,
         null=True,
         related_name='enfants_mere'
@@ -42,7 +42,7 @@ class Membre(models.Model):
 
     couple = models.ForeignKey(
         to='self',
-        on_delete=models.CASCADE,
+        on_delete=models.SET_NULL,
         blank=True,
         null=True,
         related_name='en_couple_avec'
@@ -57,7 +57,7 @@ class Membre(models.Model):
 
     user = models.ForeignKey(
         to=User,
-        on_delete=models.CASCADE,
+        on_delete=models.SET_NULL,
         blank=True,
         null=True,
         related_name='utilisateur_associe'
