@@ -1,27 +1,11 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "loric_genealogy/wsgi.py",
-      "use": "@vercel/python",
-      "config": { "maxLambdaSize": "15mb", "runtime": "python3.13" }
-    },
-    {
-      "src": "build_files.sh",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "staticfiles"
-      }
-    }
-  ],
-  "routes": [
-    {
-      "src": "/static/(.*)",
-      "dest": "/static/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "loric_genealogy/wsgi.py"
-    }
-  ]
+    "buildCommand": "pip install -r requirements.txt && python manage.py collectstatic --noinput",
+    "outputDirectory": ".",
+    "framework": "other",
+    "routes": [
+        {
+        "src": "/(.*)",
+        "dest": "wsgi.py"
+        }
+    ]
 }
