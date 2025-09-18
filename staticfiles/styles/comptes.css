@@ -1,0 +1,18 @@
+.connexion, .inscription {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.connexion section, .inscription section {
+    width: 70%;
+    max-width: 500px;
+}
+
+.connexion .errorlist, .inscription .errorlist {
+    list-style: none;
+    background-color: rgba(255, 150, 150, 0.5);
+    padding: 10px;
+    border-radius: 10px;
+}

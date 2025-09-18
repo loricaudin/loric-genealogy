@@ -1,0 +1,79 @@
+.membre-details .photo-profil {
+    max-width: 100px;
+    max-height: 100px;
+    border-radius: 100%;
+}
+
+.membre-details .infos-principaux {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.membre-details .infos-principaux div > div {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.membre-details .infos-principaux h1 {
+    margin: 0;
+}
+
+.membre-details h2 {
+    display: inline;
+    font-size: 16px;
+    margin: 0;
+}
+
+.membre-details ul {
+    margin: 0;
+    display: inline-block;
+    list-style: none;
+    padding: 0;
+}
+
+.membre-details .contenu-fenetre .liste-infos {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.membre-details .liste-infos > div {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+@media screen and (max-width: 1000px) {
+    .membre-details .contenu-fenetre .liste-infos {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+}
+
+.membre-details .modification {
+    display: block;
+}
+
+.membre-details .lecture {
+    display: none;
+}
+
+.membre-details .form-lecture .modification {
+    display: none;
+}
+
+.membre-details .form-lecture .lecture {
+    display: block;
+}
