@@ -20,6 +20,10 @@
     {
       "src": "/(.*)",
       "dest": "loric_genealogy/wsgi.py"
+    },
+    {
+        "src": "/media/(.*)",
+        "dest": "/media/$1"
     }
   ]
 }
