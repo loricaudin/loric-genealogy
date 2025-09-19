@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        {% block content_connecte %}{% endblock %}
+    {% else %}
+        <section>
+            <h1>Vous n'êtes pas connecté</h1>
+            <p>L'accès à cette page nécessite d'être connecté.</p>
+            <a class="bouton-connecter" href="{% url 'compte:login' %}"><button class="bouton">Se connecter</button></a>
+        </section>
+    {% endif %}
+{% endblock %}

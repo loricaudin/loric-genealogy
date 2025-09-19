@@ -1,10 +1,10 @@
-{% extends "base.html" %}
+{% extends "base_connecte.html" %}
 {% load static %}
 {% csrf_token %}
 
 {% block title %}Loric Genealogy - Liste des membres{% endblock %}
 {% block style %}<link rel="stylesheet" href ="{% static 'styles/membres.css' %}"/>{% endblock %}
 
-{% block content %}
+{% block content_connecte %}
     <p>Bonjour</p>
 {% endblock %}

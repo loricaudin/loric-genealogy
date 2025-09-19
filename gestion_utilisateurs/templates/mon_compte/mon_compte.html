@@ -1,10 +1,10 @@
-{% extends "base.html" %}
+{% extends "base_connecte.html" %}
 {% load static %}
 {% csrf_token %}
 
 {% block title %}Loric Genealogy - Mon compte{% endblock %}
 {% block style %}<link rel="stylesheet" href ="{% static 'styles/compte.css' %}"/>{% endblock %}
 
-{% block content %}
+{% block content_connecte %}
     <p>Bonjour, ça va ?</p>
 {% endblock %}
