@@ -3,8 +3,54 @@
 {% csrf_token %}
 
 {% block title %}Loric Genealogy - Mon compte{% endblock %}
-{% block style %}<link rel="stylesheet" href ="{% static 'styles/compte.css' %}"/>{% endblock %}
+{% block style %}<link rel="stylesheet" href ="{% static 'styles/comptes.css' %}"/>{% endblock %}
 
 {% block content_connecte %}
-    <p>Bonjour, ça va ?</p>
+    <section class="mon-compte">
+        <form method="post" class="form-lecture">
+            <h1>Mon compte</h1>
+            {% if succes %}
+                <p class="successlist">
+                    {% for message in succes %}
+                        <span>{{message}}</span>
+                    {% endfor %}
+                </p>
+            {% endif %}
+            <p>Toutes les infos sur vous et votre compte sont réunies ici.</p>
+            <div class="actions-compte">
+                <a class="bouton lecture" onclick="document.querySelector('.mon-compte > form').classList.toggle('form-lecture')">Modifier</a>
+                <a class="bouton modification" onclick="document.querySelector('.mon-compte > form').classList.toggle('form-lecture')">Annuler</a>
+                <button class="bouton modification" onclick="">Enregistrer</button>
+            </div>
+            <h2>Mes identifiants de connexion</h2>
+            <p>
+                <label>Nom d'utilisateur :</label>
+                <span class="lecture">{{user.username}}</span>
+                <input class="modification" name="username" type="text" value="{{user.username}}"/>
+            </p>
+            <h2>Mes informations personnelles</h2>
+            <p>Vous avez la main sur vos informations personnelles. Les données ne sont destinées uniquement pour l'arbre généalogique. Vous pouvez choisir de supprimer vos informations visibles par les autres membres de la famille, mais gardez toujours au minimum votre nom et votre prénom de préférence.</p>
+            {% if membre_connecte %}
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="icone-compte">
+                        {% if membre_connecte.photo.url is not None %}
+                            <img src="{{membre_connecte.photo.url}}"/>
+                        {% else %}
+                            {{membre_connecte.initiales}}
+                        {% endif %}
+                    </div>
+                    <div>
+                        <h1>{{membre_connecte.prenom}} {{membre_connecte.nom_famille}}</h1>
+                    </div>
+                </form>
+            {% else %}
+                <p>
+                    Une erreur est survenue. Veuillez recharger la page.
+                    Si le problème persiste, veuillez contacter l'administrateur
+                    en lui fournissant ce code erreur : MEMBRE_NOT_FOUND
+                </p>
+            {% endif %}
+        </form>
+    </section>
 {% endblock %}

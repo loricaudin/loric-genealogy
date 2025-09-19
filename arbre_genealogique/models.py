@@ -80,3 +80,6 @@ class Membre(models.Model):
     
     def enfants(self):
         return Membre.objects.filter(models.Q(pere=self) | models.Q(mere=self))
+    
+    def initiales(self):
+        return self.prenom[0] + self.nom_famille[0]

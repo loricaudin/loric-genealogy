@@ -10,9 +10,60 @@
     max-width: 500px;
 }
 
-.connexion .errorlist, .inscription .errorlist {
-    list-style: none;
-    background-color: rgba(255, 150, 150, 0.5);
-    padding: 10px;
-    border-radius: 10px;
+.mon-compte .icone-compte {
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    background-color: var(--couleur-principale);
+    border: 5px solid transparent;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+    font-size: 50px;
+    margin: 10px;
+
+    transition: all 0.2s;
+}
+
+.mon-compte h1 {
+    margin: 0;
+}
+
+.mon-compte .icone-compte img {
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+}
+
+.mon-compte .modification {
+    display: block;
+}
+
+.mon-compte .lecture {
+    display: none;
+}
+
+.mon-compte .form-lecture .modification {
+    display: none;
+}
+
+.mon-compte .form-lecture .lecture {
+    display: block;
+}
+
+.mon-compte label {
+    font-weight: bold;
+}
+
+.mon-compte .actions-compte {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 10px;
 }

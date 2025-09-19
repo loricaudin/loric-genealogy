@@ -9,20 +9,20 @@
             </div>
         </button>
     {% endif %}
-    <h1><a href="/"><img src="{% static 'images/icone.png' %}" /> Loric Genealogy</a></h1>
+    <h1><a href="/"><img src="{% static 'images/icone.png' %}"/>Loric Genealogy</a></h1>
     <div>
         {% if user.is_authenticated %}
             <nav>
                 <ul>
-                    <li><a href="{% url 'arbre_genealogique:arbre' %}">Arbre</a></li>
-                    <li><a href="{% url 'arbre_genealogique:liste' %}">Liste</a></li>
+                    <li><a href="{% url 'arbre_genealogique:arbre' %}">Arbre généalogique</a></li>
+                    <li><a href="{% url 'arbre_genealogique:liste' %}">Liste des membres</a></li>
                 </ul>
             </nav>
             <div class="icone-compte">
-                {% if photo_membre %}
-                    <img src="{{photo_membre}}"/>
-                {% elif initiales_membre %}
-                    {{initiales_membre}}
+                {% if membre_connecte and membre_connecte.photo.url %}
+                    <img src="{{membre_connecte.photo.url}}"/>
+                {% elif membre_connecte %}
+                    {{membre_connecte.initiales}}
                 {% else %}
                     {{"A"}}
                 {% endif %}
@@ -34,7 +34,7 @@
     <span class="menu-compte">
         <a href="{% url 'compte:mon_compte' %}">Mon compte</a>
         {% if user.is_staff %}
-            <a href="/admin">Portail admin {{user.o}}</a>
+            <a href="/admin" target="_blank">Portail admin {{user.o}}</a>
         {% endif %}
         <form method="post" action="{% url 'compte:logout' %}">{% csrf_token %}<button class="bouton" type="submit">Se déconnecter</button></form>
     </span>

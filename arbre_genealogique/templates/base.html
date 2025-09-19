@@ -12,11 +12,11 @@
     {% block style %}{% endblock %}
 </head>
 <body>
-    {% if not user.is_authenticated or initiales_membre or user.is_staff %}
+    {% if not user.is_authenticated or membre_connecte or user.is_staff %}
         {% include "header.html" %}
     {% endif %}
     <main>
-        {% if not user.is_authenticated or initiales_membre is not None %}
+        {% if not user.is_authenticated or membre_connecte %}
             {% block content %}{% endblock %}
         {% elif user.is_staff %}
             <section>

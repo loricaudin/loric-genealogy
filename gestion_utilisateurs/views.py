@@ -74,9 +74,22 @@ def register(request):
         return render(request, PAGE_INSCRIPTION, contexte)
     else:
         return render(request, PAGE_INSCRIPTION, {})
-PAGE_MON_COMPTE
+
+
+
 def mon_compte(request):
+    contexte = {
+        "succes": [],
+        "erreur": []
+    }
     if request.method == 'POST':
-        pass
-    else:
-        return render(request, PAGE_MON_COMPTE, {})
+        user = request.user
+        if request.POST["username"] != user.username:
+            try:
+                user.username = request.POST["username"]
+                user.save()
+                contexte["succes"].append("Le nom d'utilisateur a été modifié avec succès")
+            except Exception as e:
+                contexte["erreur"].append("Echec de la modification du nom d'utilisateur")
+    
+    return render(request, PAGE_MON_COMPTE, contexte)

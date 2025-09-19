@@ -80,8 +80,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 
-                'arbre_genealogique.context_processors.photo_membre',
-                'arbre_genealogique.context_processors.initiales_membre',
+                'arbre_genealogique.context_processors.membre_connecte',
             ],
         },
     },

@@ -169,3 +169,19 @@ main section > h2 {
     margin-top: 0;
     padding-top: 0;
 }
+
+.errorlist {
+    list-style: none;
+    background-color: rgba(255, 150, 150, 0.5);
+    padding: 10px;
+    border-radius: 10px;
+    display: grid;
+}
+
+.successlist {
+    list-style: none;
+    background-color: rgba(150, 255, 150, 0.5);
+    padding: 10px;
+    border-radius: 10px;
+    display: grid;
+}
