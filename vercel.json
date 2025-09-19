@@ -4,18 +4,20 @@
     {
       "src": "loric_genealogy/wsgi.py",
       "use": "@vercel/python",
-      "config": { "runtime": "python3.13" }
-    },
-    {
-      "src": "build_files.sh",
-      "use": "@vercel/static-build",
-      "config": { "distDir": "public" }
+      "config": {
+        "runtime": "python3.13",
+        "buildCommand": "bash build_files.sh"
+      }
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "loric_genealogy/wsgi.py"
+      "dest": "/loric_genealogy/wsgi.py"
+    },
+    {
+      "src": "/static/(.*)",
+      "dest": "/static/$1"
     }
   ]
 }
