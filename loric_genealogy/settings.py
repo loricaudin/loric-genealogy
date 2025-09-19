@@ -34,7 +34,9 @@ SECRET_KEY = env('SECRET_KEY')
 if env('ENV') == 'dev':
     DEBUG = True
 else:
-    DEBUG = False
+    DEBUG = True # TODO : False
+    print("Type de base de données :")
+    print(env('DB_ENGINE'))
 
 ALLOWED_HOSTS = ['*']
 
