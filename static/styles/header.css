@@ -391,7 +391,7 @@ header .menu-compte a:hover {
     }
 }
 
-@media screen and (max-width: 350px) {
+@media screen and (max-width: 450px) {
     header h1 img {
         margin-top: 10px;
         margin-bottom: 10px;
