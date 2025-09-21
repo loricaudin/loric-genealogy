@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 
 from arbre_genealogique.models import Membre
+from arbre_genealogique.context_processors import membre_connecte
 
 PAGE_INSCRIPTION = "registration/signup.html"
 PAGE_MON_COMPTE = "mon_compte/mon_compte.html"
@@ -83,13 +84,32 @@ def mon_compte(request):
         "erreur": []
     }
     if request.method == 'POST':
+
+        # Si le nom d'utilisateur a changé :
         user = request.user
-        if request.POST["username"] != user.username:
+        if request.FILES.get('username') and request.POST["username"] != user.username:
             try:
                 user.username = request.POST["username"]
                 user.save()
                 contexte["succes"].append("Le nom d'utilisateur a été modifié avec succès")
             except Exception as e:
                 contexte["erreur"].append("Echec de la modification du nom d'utilisateur")
+        
+        membre = membre_connecte(request)["membre_connecte"]
+
+        if membre:
+            # Si la photo de profil a changé :
+            if request.FILES.get('photo'):
+                try:
+                    photo = request.FILES['photo']
+                    if str(photo) == "suppression-image.png": # Astuce pour indiquer qu'on supprime la photo de profil
+                        membre.photo = None
+                    else:
+                        membre.photo = photo
+                    
+                    membre.save()
+                    contexte["succes"].append("La photo de profil a été modifiée avec succès")
+                except Exception as e:
+                    contexte["erreur"].append("Echec de la modification de la photo de profil")
     
     return render(request, PAGE_MON_COMPTE, contexte)

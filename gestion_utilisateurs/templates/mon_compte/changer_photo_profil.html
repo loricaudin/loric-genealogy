@@ -1,0 +1,190 @@
+{% extends "popup/popup_base.html" %}
+
+{% block popup-titre %}Modifier la photo de profil{% endblock %}
+
+{% block popup-contenu %}
+    {% with TAILLE_CANVAS=200 %}
+        <style>
+            #canvas-photo {
+                --taille-canvas: {{TAILLE_CANVAS}}px;
+                position: relative;
+                width: var(--taille-canvas);
+                height: var(--taille-canvas);
+                margin: auto;
+                border-radius: 50%;
+                overflow: hidden;
+                border: 2px dashed #aaa;
+            }
+            canvas {
+                position: absolute;
+                top: 0; left: 0;
+                cursor: grab;
+            }
+            #controle-photo {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+                align-items: center;
+                gap: 10px;
+                flex-wrap: wrap;
+            }
+            button {
+                padding: 5px 10px;
+                margin: 0 5px;
+                font-size: 16px;
+            }
+
+            #form-changer-photo {
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .zone-edition {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+                align-items: center;
+                gap: 10px;
+                flex-wrap: wrap;
+            }
+        </style>
+
+        <form id="form-changer-photo" method="POST" action="{% url 'compte:mon_compte' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" id="fichier-photo-profil" name="photo" accept="image/*"/><br><br>
+
+            <div class="zone-edition">
+                <div id="canvas-photo">
+                    <canvas id="canvas" width="{{TAILLE_CANVAS}}" height="{{TAILLE_CANVAS}}"></canvas>
+                </div>
+
+                <div id="controle-photo">
+                    <button class="bouton" onclick="zoomerPhoto()">Agrandir</button>
+                    <button class="bouton" onclick="dezoomerPhoto()">Réduire</button>
+                </div>
+            </div>
+            <a class="bouton" onclick="enregistrerModificationPhoto()">Enregistrer</a>
+        </form>
+
+        <script>
+            function getCookie(name) {
+                const value = `; ${document.cookie}`;
+                const parts = value.split(`; ${name}=`);
+                if (parts.length === 2) return parts.pop().split(';').shift();
+            }
+
+            let canvas = document.getElementById('canvas');
+            let ctx = canvas.getContext('2d');
+            let img = new Image();
+            let scale = 1;
+            let offsetX = 0, offsetY = 0;
+            let dragging = false, startX, startY;
+
+            document.getElementById('fichier-photo-profil').addEventListener('change', e => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = () => {
+                        img.src = reader.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            img.onload = () => {
+                offsetX = offsetY = 0;
+                scale = 1;
+                draw();
+            };
+
+            canvas.addEventListener('mousedown', e => {
+                dragging = true;
+                startX = e.offsetX - offsetX;
+                startY = e.offsetY - offsetY;
+            });
+        
+            canvas.addEventListener('mouseup', () => dragging = false);
+            canvas.addEventListener('mouseleave', () => dragging = false);
+            canvas.addEventListener('mousemove', e => {
+                if (dragging) {
+                    offsetX = e.offsetX - startX;
+                    offsetY = e.offsetY - startY;
+                    draw();
+                }
+            });
+
+
+            canvas.addEventListener('wheel', e => {
+                const x = e.offsetX;
+                const y = e.offsetY;
+                const dx = x - 150;
+                const dy = y - 150;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance <= 150) {
+                    e.preventDefault();
+                    const zoomFactor = e.deltaY < 0 ? 1.1 : 0.9;
+                    scale *= zoomFactor;
+                    draw();
+                }
+            });
+
+            function draw() {
+                let tailleCanvas = parseInt("{{TAILLE_CANVAS}}");
+
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.save();
+                ctx.beginPath();
+                ctx.arc(tailleCanvas / 2, tailleCanvas / 2, tailleCanvas / 2, 0, Math.PI * 2);
+                ctx.clip();
+                ctx.drawImage(img, offsetX, offsetY, img.width * scale, img.height * scale);
+                ctx.restore();
+            }
+
+            function zoomerPhoto() {
+                scale *= 1.1;
+                draw();
+            }
+
+            function dezoomerPhoto() {
+                scale /= 1.1;
+                draw();
+            }
+
+            function enregistrerModificationPhoto() {
+                let tailleCanvas = parseInt("{{TAILLE_CANVAS}}");
+
+                const exportCanvas = document.createElement('canvas');
+                exportCanvas.width = tailleCanvas;
+                exportCanvas.height = tailleCanvas;
+                const exportCtx = exportCanvas.getContext('2d');
+
+                exportCtx.beginPath();
+                exportCtx.arc(tailleCanvas / 2, tailleCanvas / 2, tailleCanvas / 2, 0, Math.PI * 2);
+                exportCtx.clip();
+                exportCtx.drawImage(img, offsetX, offsetY, img.width * scale, img.height * scale);
+
+                exportCanvas.toBlob(blob => {
+                    const fileInput = document.getElementById('fichier-photo-profil');
+                    const dataTransfer = new DataTransfer();
+                    dataTransfer.items.add(new File([blob], 'profil.png', { type: 'image/png' }));
+                    fileInput.files = dataTransfer.files;
+
+                    document.getElementById('form-changer-photo').submit();
+                }, 'image/png');
+            }
+
+            function supprimerPhoto() {
+                const fileInput = document.getElementById('fichier-photo-profil');
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(new File([], 'suppression-image.png', { type: 'image/png' }));
+                fileInput.files = dataTransfer.files;
+
+                document.getElementById('form-changer-photo').submit();
+            }
+        </script>
+    {% endwith %}
+{% endblock %}

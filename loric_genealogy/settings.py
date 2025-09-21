@@ -35,8 +35,6 @@ if env('ENV') == 'dev':
     DEBUG = True
 else:
     DEBUG = True # TODO : False
-    print("Type de base de données :")
-    print(env('DB_ENGINE'))
 
 ALLOWED_HOSTS = ['*']
 
@@ -51,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'django_cleanup.apps.CleanupConfig',
 
     'arbre_genealogique',
     'gestion_utilisateurs'

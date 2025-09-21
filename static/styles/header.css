@@ -1,13 +1,19 @@
+html {
+    --taille-header: 80px;
+}
+
 header {
-    /* position: fixed;
+    position: fixed;
     left: 0px;
     top: 0px;
     z-index: 1;
-    height: 80px; */
+
+    height: var(--taille-header);
+    
     margin: 0px;
     padding-left: 10px;
     padding-right: 10px;
-    width: calc(100%-10px);
+    width: calc(100% - 20px);
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -15,6 +21,10 @@ header {
 
     background-color: rgb(245, 255, 245);
     box-shadow: 10px 5px 5px rgba(100, 100, 100, 0.1);
+}
+
+main {
+    padding-top : var(--taille-header);
 }
 
 header > div {

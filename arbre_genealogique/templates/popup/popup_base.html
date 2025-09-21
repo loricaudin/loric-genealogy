@@ -1,0 +1,14 @@
+<span class="popup">
+    <div class="fenetre-popup">
+        <div class="popup-en-tete">
+            <h1>{% block popup-titre %}{% endblock %}</h1>
+            <button class="bouton-fermer">
+                <div class="barre-croix-1"></div>
+                <div class="barre-croix-2"></div>
+            </button>
+        </div>
+        <div class="contenu-fenetre">
+            {% block popup-contenu %}{% endblock %}
+        </div>
+    </div>
+</span>

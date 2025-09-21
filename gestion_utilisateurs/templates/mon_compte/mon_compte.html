@@ -7,11 +7,19 @@
 
 {% block content_connecte %}
     <section class="mon-compte">
-        <form method="post" class="form-lecture">
+        <form method="post" class="form-lecture form-mon-compte" enctype="multipart/form-data">
+            {% csrf_token %}
             <h1>Mon compte</h1>
             {% if succes %}
                 <p class="successlist">
                     {% for message in succes %}
+                        <span>{{message}}</span>
+                    {% endfor %}
+                </p>
+            {% endif %}
+            {% if erreur %}
+                <p class="errorlist">
+                    {% for message in erreur %}
                         <span>{{message}}</span>
                     {% endfor %}
                 </p>
@@ -28,22 +36,27 @@
                 <span class="lecture">{{user.username}}</span>
                 <input class="modification" name="username" type="text" value="{{user.username}}"/>
             </p>
+            <p>
+                <label>Mot de passe :</label>
+                <p class="lecture"><a class="bouton" href="{% url 'compte:password_change' %}">Modifier le mot de passe</a></p>
+                <span class="modification">Enregistrez ou annulez vos modifications avant de modifier le mot de passe.</span>
+            </p>
             <h2>Mes informations personnelles</h2>
             <p>Vous avez la main sur vos informations personnelles. Les données ne sont destinées uniquement pour l'arbre généalogique. Vous pouvez choisir de supprimer vos informations visibles par les autres membres de la famille, mais gardez toujours au minimum votre nom et votre prénom de préférence.</p>
             {% if membre_connecte %}
-                <form method="post">
-                    {% csrf_token %}
-                    <div class="icone-compte">
-                        {% if membre_connecte.photo.url is not None %}
-                            <img src="{{membre_connecte.photo.url}}"/>
-                        {% else %}
-                            {{membre_connecte.initiales}}
-                        {% endif %}
-                    </div>
-                    <div>
-                        <h1>{{membre_connecte.prenom}} {{membre_connecte.nom_famille}}</h1>
-                    </div>
-                </form>
+                <div class="icone-compte">
+                    {% if membre_connecte.photo.url is not None %}
+                        <img src="{{membre_connecte.photo.url}}" class="photo"/>
+                    {% else %}
+                        {{membre_connecte.initiales}}
+                    {% endif %}
+                </div>
+                <div>
+                    <span class="lecture">
+                        <a class="bouton bouton-changer-photo">Changer la photo</a>
+                        <a class="bouton bouton-supprimer-photo">Supprimer la photo</a>
+                    </span>
+                </div>
             {% else %}
                 <p>
                     Une erreur est survenue. Veuillez recharger la page.
@@ -53,4 +66,18 @@
             {% endif %}
         </form>
     </section>
+    <span class="popup-modifier-image" style="display: none;">{% include "mon_compte/changer_photo_profil.html" %}</span>
+    <script>
+        document.querySelector(".mon-compte .bouton-changer-photo").addEventListener("click", function() {
+            document.querySelector(".popup-modifier-image").style.display = "block";
+        })
+        document.querySelector(".popup-modifier-image .bouton-fermer").addEventListener("click", function() {
+            document.querySelector(".popup-modifier-image").style.display = "none";
+        })
+        document.querySelector(".mon-compte .bouton-supprimer-photo").addEventListener("click", function() {
+            if(confirm("Êtes-vous sûr de vouloir supprimer la photo ?") == true) {
+                supprimerPhoto();
+            }
+        })
+    </script>
 {% endblock %}
