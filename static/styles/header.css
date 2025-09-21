@@ -198,6 +198,8 @@ header .menu-compte button.bouton {
     background-color: transparent;
     font-family: 'Poppins';
     width: 100%;
+    text-align: left;
+    margin-left: 0;
 }
 
 header .menu-compte button.bouton:hover {

@@ -19,8 +19,8 @@
                 </ul>
             </nav>
             <div class="icone-compte">
-                {% if membre_connecte and membre_connecte.photo.url %}
-                    <img src="{{membre_connecte.photo.url}}"/>
+                {% if membre_connecte and membre_connecte.photo %}
+                     <img src="data:image/jpeg;base64,{{membre_connecte.photo}}"/>
                 {% elif membre_connecte %}
                     {{membre_connecte.initiales}}
                 {% else %}

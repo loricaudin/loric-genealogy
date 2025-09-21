@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 from arbre_genealogique.models import Membre
 from arbre_genealogique.context_processors import membre_connecte
 
+from arbre_genealogique.functions_images import charger_image_base64
+
 PAGE_INSCRIPTION = "registration/signup.html"
 PAGE_MON_COMPTE = "mon_compte/mon_compte.html"
 
@@ -105,7 +107,7 @@ def mon_compte(request):
                     if str(photo) == "suppression-image.png": # Astuce pour indiquer qu'on supprime la photo de profil
                         membre.photo = None
                     else:
-                        membre.photo = photo
+                        membre.photo = charger_image_base64(photo)
                     
                     membre.save()
                     contexte["succes"].append("La photo de profil a été modifiée avec succès")

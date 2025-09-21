@@ -23,15 +23,6 @@ Activer le venv :
 source venv/bin/activate
 ```
 
-Installer les dépendances :
-```bash
-pip install -r requirements.txt
-```
-Démarrer le projet :
-```bash
-python3 manage.py runserver
-```
-
 ### Sur Windows
 Exécuter le projet dans un environnement virtuel Python :
 ```bash
@@ -42,13 +33,9 @@ Activer le venv :
 venv\Scripts\activate
 ```
 
-Installer les dépendances :
+## Installer les dépendances :
 ```bash
 pip install -r requirements.txt
-```
-Démarrer le projet :
-```bash
-python manage.py runserver
 ```
 
 ## Insérer un jeu de données :
@@ -61,4 +48,9 @@ python manage.py migrate
 Créer un premier utilisateur :
 ```
 python manage.py createsuperuser
+```
+
+## Démarrer le projet :
+```bash
+python manage.py runserver
 ```

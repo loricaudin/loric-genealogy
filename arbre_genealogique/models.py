@@ -2,8 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 import uuid
 
-def image_upload_path(instance, filename):
-    return f'photos/{instance.uuid}/{filename}'
+""" def image_upload_path(instance, filename):
+    return f'photos/{instance.uuid}/{filename}' """
 
 class Membre(models.Model):
 
@@ -23,7 +23,7 @@ class Membre(models.Model):
     adresse_mail = models.CharField(max_length=100, blank=True, null=True)
     adresse = models.CharField(max_length=255, blank=True, null=True)
 
-    photo = models.ImageField(upload_to=image_upload_path, blank=True, null=True)
+    photo = models.TextField(blank=True, null=True) # Parce qu'avec ImageField, l'image ne peut pas être importées sur Vercel (erreur : Read-only file system: '/var/task/media')
 
     pere = models.ForeignKey(
         to='self',
@@ -53,7 +53,7 @@ class Membre(models.Model):
         blank=True
     )
 
-    biographie = models.CharField(max_length=1024, blank=True, null=True)
+    biographie = models.TextField(blank=True, null=True)
 
     user = models.ForeignKey(
         to=User,

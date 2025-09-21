@@ -135,12 +135,12 @@ main section > h2 {
     height: 50px;
 }
 
-.popup .fenetre-popup .popup-en-tete .bouton-fermer :hover {
-    background-color: rgba(200, 200, 230, 0.5);
+.popup .fenetre-popup .popup-en-tete .bouton-fermer:hover {
+    background-color: rgba(150, 230, 150, 0.5);
 }
 
-.popup .fenetre-popup .popup-en-tete .bouton-fermer :focus {
-    background-color: rgba(150, 150, 200, 0.5);
+.popup .fenetre-popup .popup-en-tete .bouton-fermer:focus {
+    background-color: rgba(150, 200, 150, 0.5);
 }
 
 .popup .fenetre-popup .popup-en-tete .bouton-fermer .barre-croix-1,
