@@ -10,6 +10,24 @@
     max-width: 500px;
 }
 
+.mon-compte .modification-photo-compte {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.mon-compte .actions-icone-compte {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
 .mon-compte .icone-compte {
     width: 100px;
     height: 100px;

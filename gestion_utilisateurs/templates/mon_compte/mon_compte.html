@@ -44,18 +44,19 @@
             <h2>Mes informations personnelles</h2>
             <p>Vous avez la main sur vos informations personnelles. Les données ne sont destinées uniquement pour l'arbre généalogique. Vous pouvez choisir de supprimer vos informations visibles par les autres membres de la famille, mais gardez toujours au minimum votre nom et votre prénom de préférence.</p>
             {% if membre_connecte %}
-                <div class="icone-compte">
-                    {% if membre_connecte.photo is not None %}
-                         <img src="data:image/jpeg;base64,{{membre_connecte.photo}}" class="photo"/>
-                    {% else %}
-                        {{membre_connecte.initiales}}
-                    {% endif %}
-                </div>
-                <div>
-                    <span class="lecture">
-                        <a class="bouton bouton-changer-photo">Changer la photo</a>
-                        <a class="bouton bouton-supprimer-photo">Supprimer la photo</a>
-                    </span>
+                <div class="modification-photo-compte">
+                    <div class="icone-compte">
+                        {% if membre_connecte.photo is not None %}
+                            <img src="data:image/jpeg;base64,{{membre_connecte.photo}}" class="photo"/>
+                        {% else %}
+                            {{membre_connecte.initiales}}
+                        {% endif %}
+                    </div>
+                    <div class="actions-icone-compte">
+                        <span class="lecture"><a class="bouton bouton-changer-photo">Changer la photo</a></span>
+                        <span class="lecture"><a class="bouton bouton-supprimer-photo">Supprimer la photo</a></span>
+                        
+                    </div>
                 </div>
             {% else %}
                 <p>
