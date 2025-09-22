@@ -33,28 +33,6 @@ header > div {
     align-items: center;
 }
 
-header > div .bouton-parametres {
-    padding: 10px;
-    background: transparent;
-    border-radius: 5px;
-    margin-left: 10px;
-    margin-right: 10px;
-    transition: all 0.5s;
-}
-
-header > div .bouton-parametres:hover {
-    background-color: rgba(200, 200, 230, 0.5);
-}
-
-header > div .bouton-parametres :focus {
-    background-color: rgba(150, 150, 200, 0.5);
-}
-
-header > div .bouton-parametres img {
-    width: 30px;
-    height: 30px;
-}
-
 header #bouton-menu-nav {
     display: none;
 }
@@ -285,15 +263,6 @@ header .menu-compte a:hover {
     header > div {
         align-items: flex-start;
         width: 100%;
-    }
-    
-    header > div .bouton-parametres {
-        position: fixed;
-        top: 15px;
-        right: 20px;
-
-        margin-left: 0px;
-        margin-right: 0px;
     }
 
     header nav {
