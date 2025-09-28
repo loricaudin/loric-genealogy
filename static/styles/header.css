@@ -38,7 +38,8 @@ header #bouton-menu-nav {
 }
 
 header h1 {
-    font-family: Poppins, Calibri;
+    font-family: "Poppins SemiBold", Poppins, Calibri;
+    font-weight: normal;
     text-decoration: none;
     cursor: pointer;
     margin: 15px;
@@ -50,8 +51,7 @@ header h1 img {
 
 header h1 a {
     text-decoration: none;
-    font-weight: normal;
-    font-size: 30px;
+    font-size: 24px;
     color: black;
     display: flex;
     flex-direction: row;
