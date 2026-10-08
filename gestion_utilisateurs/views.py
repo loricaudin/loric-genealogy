@@ -107,7 +107,7 @@ def mon_compte(request):
                     if str(photo) == "suppression-image.png": # Astuce pour indiquer qu'on supprime la photo de profil
                         membre.photo = None
                     else:
-                        membre.photo = charger_image_base64(photo)
+                        membre.photo = photo
                     
                     membre.save()
                     contexte["succes"].append("La photo de profil a été modifiée avec succès")

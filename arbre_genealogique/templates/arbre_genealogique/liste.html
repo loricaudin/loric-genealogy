@@ -6,5 +6,351 @@
 {% block style %}<link rel="stylesheet" href ="{% static 'styles/membres.css' %}"/>{% endblock %}
 
 {% block content_connecte %}
-    <p>Bonjour</p>
+    <style>
+        .actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .search-container {
+            flex: 1;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #d5d8dd;
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+            background: white;
+        }
+
+        .search-input:focus {
+            border-color: #4f46e5;
+        }
+
+        .table-container {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background-color: #f8f9fb;
+        }
+
+        th {
+            text-align: left;
+            padding: 14px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #60646c;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #eeeeee;
+            font-size: 14px;
+        }
+
+        tbody tr {
+            cursor: pointer;
+            transition: background-color 0.1s ease;
+        }
+
+        tbody tr:hover {
+            background-color: #f8f9fc;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .member-photo {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            background-color: #e5e7eb;
+        }
+
+        .member-photo-placeholder {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #e5e7eb;
+            color: #6b7280;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .membre-modal {
+            display: none;
+        }
+
+        .membre-modal.open {
+            display: block;
+        }
+
+        #no-result {
+            display: none;
+            padding: 30px;
+            text-align: center;
+            color: #777;
+        }
+
+        @media (max-width: 768px) {
+
+            .actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-container {
+                width: 100%;
+            }
+
+            .table-container {
+                overflow-x: auto;
+            }
+
+            table {
+                min-width: 800px;
+            }
+        }
+    </style>
+    <button type="button" class="bouton" id="ajouter-membre">Ajouter un membre</button>
+    <div class="actions">
+        <div class="search-container">
+            <input
+                type="search"
+                id="search-input"
+                class="search-input"
+                placeholder="Rechercher un membre..."
+                autocomplete="off"
+            >
+        </div>
+    </div>
+    <div class="table-container">
+        <table id="members-table">
+            <thead>
+                <tr>
+                    <!-- PHOTO -->
+                    <th>Photo</th>
+                    <!-- PRÉNOM -->
+                    <th>Prénom</th>
+                    <!-- NOM -->
+                    <th>Nom</th>
+                    <!-- GENRE -->
+                    <th>Genre</th>
+                    <!-- DATE DE NAISSANCE -->
+                    <th>Date de naissance</th>
+                    <!-- TÉLÉPHONE -->
+                    <th>Téléphone</th>
+                    <!-- EMAIL -->
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody id="members-table-body">
+                {% for membre in liste_membres %}
+                    <span class="membre-modal" id="membre-modal-{{membre.id}}">{% include "../popup/popup_details_membre.html" with details_membre=membre %}</span>
+                    <tr
+                        class="member-row"
+                        data-member-id="{{ membre.id }}"
+                    >
+                        <!-- PHOTO -->
+                        <td>
+                            {% if membre.photo %}
+                                <img
+                                    src="{{ membre.photo.url }}"
+                                    alt="{{ membre.prenom }}"
+                                    class="member-photo"
+                                >
+                            {% else %}
+                                <div class="member-photo-placeholder">
+                                    {{ membre.initiales }}
+                                </div>
+                            {% endif %}
+                        </td>
+                        <!-- PRÉNOM -->
+                        <td>
+                            {{ membre.prenom }}
+                        </td>
+                        <!-- NOM -->
+                        <td>
+                            {{ membre.nom_famille }}
+                        </td>
+                        <!-- GENRE -->
+                        <td>
+                            {% if membre.genre == "H" %}
+                                Homme
+                            {% elif membre.genre == "F" %}
+                                Femme
+                            {% else %}
+                                —
+                            {% endif %}
+                        </td>
+                        <!-- DATE DE NAISSANCE -->
+                        <td>
+                            {% if membre.date_naissance %}
+                                {{ membre.date_naissance|date:"d/m/Y" }}
+                            {% else %}
+                                —
+                            {% endif %}
+                        </td>
+                        <!-- TÉLÉPHONE -->
+                        <td>
+                            {{ membre.numero_telephone|default:"—" }}
+                        </td>
+                        <!-- EMAIL -->
+                        <td>
+                            {{ membre.adresse_mail|default:"—" }}
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="7" style="text-align: center; padding: 30px;">
+                            Aucun membre.
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div id="no-result">
+            Aucun membre ne correspond à votre recherche.
+        </div>
+    </div>
+    <script>
+
+        /* =====================================================
+        RECHERCHE / FILTRAGE
+        ===================================================== */
+
+        const searchInput = document.getElementById("search-input");
+        const memberRows = document.querySelectorAll(".member-row");
+        const noResult = document.getElementById("no-result");
+
+        searchInput.addEventListener("input", function () {
+
+            const search = this.value
+                .toLowerCase()
+                .trim();
+
+            let visibleRows = 0;
+
+            memberRows.forEach(function (row) {
+
+                const text = row.textContent.toLowerCase();
+
+                if (text.includes(search)) {
+
+                    row.style.display = "";
+                    visibleRows++;
+
+                } else {
+
+                    row.style.display = "none";
+
+                }
+
+            });
+
+            if (visibleRows === 0 && search !== "") {
+                noResult.style.display = "block";
+            } else {
+                noResult.style.display = "none";
+            }
+
+        });
+
+
+        /* =====================================================
+        POPUP
+        ===================================================== */
+        
+        function closeMemberModal(modal) {
+            modal.classList.remove("open");
+            modal.setAttribute("aria-hidden", "true");
+        }
+
+        function openMemberModal(memberId) {
+            const modal = document.getElementById(`membre-modal-${memberId}`);
+            const modalClose = modal.querySelector(".bouton-fermer");
+            console.log(modalClose)
+
+            modal.classList.add("open");
+            modal.setAttribute("aria-hidden", "false");
+
+            /* Bouton fermer */
+            modalClose.addEventListener("click", function () {
+                closeMemberModal(modal);
+            });
+
+            /* Clic sur le fond de la popup */
+            modal.addEventListener("click", function (event) {
+
+                if (event.target === modal) {
+                    closeMemberModal(modal);
+                }
+            });
+
+            /* Touche Échap */
+            document.addEventListener("keydown", function (event) {
+
+                if (event.key === "Escape") {
+                    closeMemberModal(modal);
+                }
+            });
+        }
+
+
+        /* Clic sur une ligne */
+
+        memberRows.forEach(function (row) {
+
+            row.addEventListener("click", function () {
+
+                const memberId = this.dataset.memberId;
+
+                openMemberModal(memberId);
+
+            });
+
+        });
+
+
+        /* =====================================================
+        AJOUTER UN MEMBRE
+        ===================================================== */
+
+        const addMemberButton =
+            document.getElementById("ajouter-membre");
+
+        addMemberButton.addEventListener("click", function () {
+
+            /*
+            * Pour le moment, rien n'est fait.
+            *
+            * On pourra ensuite ouvrir une popup
+            * contenant le formulaire de création.
+            */
+
+            console.log("Ajouter un membre");
+
+        });
+
+    </script>
 {% endblock %}

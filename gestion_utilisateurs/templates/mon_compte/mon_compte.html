@@ -47,7 +47,7 @@
                 <div class="modification-photo-compte">
                     <div class="icone-compte">
                         {% if membre_connecte.photo is not None %}
-                            <img src="data:image/jpeg;base64,{{membre_connecte.photo}}" class="photo"/>
+                            <img src="/media/{{membre_connecte.photo}}" class="photo"/>
                         {% else %}
                             {{membre_connecte.initiales}}
                         {% endif %}
